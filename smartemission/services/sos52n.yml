@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: sos52n
-        image: smartemission.azurecr.io/sos52n:4.3.7
+        image: smartemission/se-sos52n:latest
         imagePullPolicy: Always
         env:
           - name: SOS_USERNAME

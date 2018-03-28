@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: geoserver
-        image: smartemission.azurecr.io/geoserver:2.9.4
+        image: smartemission/se-geoserver:latest
         imagePullPolicy: Always
         env:
           - name: GS_USERNAME
