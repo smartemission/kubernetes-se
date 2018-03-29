@@ -64,5 +64,6 @@ $ kubectl create -f ./kubernetes/smartemission/services/postgres-external.yml
 $ kubectl create -f ./kubernetes/smartemission/services/geoserver.yml
 $ kubectl create -f ./kubernetes/smartemission/services/basic-auth-geoserver.yml
 $ kubectl create -f ./kubernetes/smartemission/services/sos52n.yml
+$ kubectl create -f ./kubernetes/smartemission/services/sosemu.yml
 $ kubectl create -f ./kubernetes/smartemission/ingress.yml
 ```

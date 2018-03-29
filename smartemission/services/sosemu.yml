@@ -1,0 +1,55 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sosemu-deployment
+  namespace: smartemission
+  labels:
+    app: sosemu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sosemu
+  template:
+    metadata:
+      labels:
+        app: sosemu
+    spec:
+      containers:
+      - name: sosemu
+        image: smartemission/se-sosemu:latest
+        imagePullPolicy: Always
+        env:
+          - name: SOSEMU_DB_HOST
+            value: "postgres"
+          - name: SOSEMU_DB_PORT
+            value: "5432"
+          - name: SOSEMU_DB_NAME
+            value: "gis"
+          - name: SOSEMU_DB_SCHEMA
+            value: "smartem_rt"
+          - name: SOSEMU_DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: postgres
+                key: username
+          - name: SOSEMU_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres
+                key: password
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sosemu-service
+  namespace: smartemission
+  labels:
+    app: sosemu
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: sosemu
