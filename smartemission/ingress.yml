@@ -88,3 +88,24 @@ spec:
         backend:
           serviceName: sosemu-service
           servicePort: 80
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: smartapp
+  namespace: smartemission
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/add-base-url: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: "/"
+spec:
+  rules:
+  - host: pdok.smartemission.nl
+    http:
+      paths:
+      - path: /smartapp
+        backend:
+          serviceName: smartapp-service
+          servicePort: 80
