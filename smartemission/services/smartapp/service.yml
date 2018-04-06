@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: smartapp-service
+  namespace: smartemission
+  labels:
+    app: smartapp
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: smartapp

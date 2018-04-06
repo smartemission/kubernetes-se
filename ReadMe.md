@@ -5,15 +5,15 @@
 Proxy server
 
 ```
-$ kubectl apply -f ./kubernetes/ingress-nginx/namespace.yml
-$ kubectl apply -f ./kubernetes/ingress-nginx/default-backend.yml
-$ kubectl apply -f ./kubernetes/ingress-nginx/config-map.yml
-$ kubectl apply -f ./kubernetes/ingress-nginx/tcp-services-configmap.yml
-$ kubectl apply -f ./kubernetes/ingress-nginx/udp-services-configmap.yml
-$ kubectl apply -f ./kubernetes/ingress-nginx/without-rbac.yml
-$ kubectl patch deployment -n ingress-nginx nginx-ingress-controller --type='json' --patch=$(cat ./kubernetes/ingress-nginx/publish-service-patch.yml)
-$ kubectl apply -f ./kubernetes/ingress-nginx/service.yml
-$ kubectl apply -f ./kubernetes/ingress-nginx/patch-service-without-rbac.yml
+$ kubectl apply -f ./ingress-nginx/namespace.yml
+$ kubectl apply -f ./ingress-nginx/default-backend.yml
+$ kubectl apply -f ./ingress-nginx/config-map.yml
+$ kubectl apply -f ./ingress-nginx/tcp-services-configmap.yml
+$ kubectl apply -f ./ingress-nginx/udp-services-configmap.yml
+$ kubectl apply -f ./ingress-nginx/without-rbac.yml
+$ kubectl patch deployment -n ingress-nginx nginx-ingress-controller --type='json' --patch=$(cat ./ingress-nginx/publish-service-patch.yml)
+$ kubectl apply -f ./ingress-nginx/service.yml
+$ kubectl apply -f ./ingress-nginx/patch-service-without-rbac.yml
 ```
 
 ## Cert-Manager
@@ -21,11 +21,11 @@ $ kubectl apply -f ./kubernetes/ingress-nginx/patch-service-without-rbac.yml
 Let's encrypt cert manager. Set your email address in the files `letsencrypt-staging.clusterissuer.yml` and `letsencrypt-prod.clusterissuer.yml`.
 
 ```
-$ kubectl create -f ./kubernetes/cert-manager/namespace.yml
-$ kubectl create -f ./kubernetes/cert-manager/crd.yml
-$ kubectl create -f ./kubernetes/cert-manager/deployment.yml
-$ kubectl create -f ./kubernetes/cert-manager/letsencrypt-staging.clusterissuer.yml
-$ kubectl create -f ./kubernetes/cert-manager/letsencrypt-prod.clusterissuer.yml
+$ kubectl create -f ./cert-manager/namespace.yml
+$ kubectl create -f ./cert-manager/crd.yml
+$ kubectl create -f ./cert-manager/deployment.yml
+$ kubectl create -f ./cert-manager/letsencrypt-staging.clusterissuer.yml
+$ kubectl create -f ./cert-manager/letsencrypt-prod.clusterissuer.yml
 ```
 
 ## Smart Emission
@@ -35,13 +35,13 @@ The Smart Emission stack
 ### Namespace
 
 ```
-$ kubectl create -f ./kubernetes/smartemission/namespace.yml
+$ kubectl create -f ./smartemission/namespace.yml
 ```
 
 ### Certificate
 
 ```
-$ kubectl create -f ./kubernetes/smartemission/certificate.yml
+$ kubectl create -f ./smartemission/certificate.yml
 ```
 
 ### Secrets
@@ -49,11 +49,11 @@ $ kubectl create -f ./kubernetes/smartemission/certificate.yml
 Secrets not included in the repository.
 
 ```
-$ kubectl create -f ./kubernetes/smartemission/secrets/geoserver.yml
-$ kubectl create -f ./kubernetes/smartemission/secrets/postgres.yml
-$ kubectl create -f ./kubernetes/smartemission/secrets/basic-auth.yml
-$ kubectl create -f ./kubernetes/smartemission/secrets/sos52n.yml
-$ kubectl create -f ./kubernetes/smartemission/secrets/etl-last.yml
+$ kubectl create -f ./smartemission/secrets/geoserver.yml
+$ kubectl create -f ./smartemission/secrets/postgres.yml
+$ kubectl create -f ./smartemission/secrets/basic-auth.yml
+$ kubectl create -f ./smartemission/secrets/sos52n.yml
+$ kubectl create -f ./smartemission/secrets/etl-last.yml
 ```
 
 ### Services / Deployments
@@ -61,16 +61,29 @@ $ kubectl create -f ./kubernetes/smartemission/secrets/etl-last.yml
 The `postgres-external.yml` service is not available in the repository. Create your own with the name `postgres`.
 
 ```
-$ kubectl create -f ./kubernetes/smartemission/services/postgres-external.yml
-$ kubectl create -f ./kubernetes/smartemission/services/geoserver.yml
-$ kubectl create -f ./kubernetes/smartemission/services/basic-auth-geoserver.yml
-$ kubectl create -f ./kubernetes/smartemission/services/sos52n.yml
-$ kubectl create -f ./kubernetes/smartemission/services/sosemu.yml
-$ kubectl create -f ./kubernetes/smartemission/ingress.yml
+$ kubectl create -f ./smartemission/services/postgres-external/deployment.yml
+$ kubectl create -f ./smartemission/services/postgres-external/service.yml
+
+$ kubectl create -f ./smartemission/services/geoserver/deployment.yml
+$ kubectl create -f ./smartemission/services/geoserver/service.yml
+
+$ kubectl create -f ./smartemission/services/basic-auth-geoserver/deployment.yml
+$ kubectl create -f ./smartemission/services/basic-auth-geoserver/service.yml
+
+$ kubectl create -f ./smartemission/services/sos52n/deployment.yml
+$ kubectl create -f ./smartemission/services/sos52n/service.yml
+
+$ kubectl create -f ./smartemission/services/sosemu/deployment.yml
+$ kubectl create -f ./smartemission/services/sosemu/service.yml
+
+$ kubectl create -f ./smartemission/services/influxdb/service.yml
+$ kubectl create -f ./smartemission/services/influxdb/statefulset.yml
+
+$ kubectl create -f ./smartemission/ingress.yml
 ```
 
 ### CronJobs
 
 ```
-$ kubectl create -f ./kubernetes/smartemission/cronjobs/etl-last.yml
+$ kubectl create -f ./smartemission/cronjobs/etl-last.yml
 ```

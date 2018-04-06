@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sos52n-service
+  namespace: smartemission
+  labels:
+    app: sos52n
+spec:
+  ports:
+  - port: 8080
+  selector:
+    app: sos52n

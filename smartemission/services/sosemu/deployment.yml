@@ -40,16 +40,3 @@ spec:
                 key: password
         ports:
         - containerPort: 80
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: sosemu-service
-  namespace: smartemission
-  labels:
-    app: sosemu
-spec:
-  ports:
-  - port: 80
-  selector:
-    app: sosemu

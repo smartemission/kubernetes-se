@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: geoserver-service
+  namespace: smartemission
+  labels:
+    app: geoserver
+spec:
+  ports:
+  - port: 8080
+  selector:
+    app: geoserver
