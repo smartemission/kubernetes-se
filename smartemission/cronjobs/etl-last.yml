@@ -1,0 +1,51 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: etl-last
+  namespace: smartemission
+spec:
+  schedule: "*/3 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: etl-last
+            image: smartemission/se-stetl:latest
+            args:
+            - last
+            env:
+            - name: stetl_raw_device_url_1
+              valueFrom:
+                secretKeyRef:
+                  name: etl-last
+                  key: raw_device_url_1
+            - name: stetl_raw_device_url_2
+              valueFrom:
+                secretKeyRef:
+                  name: etl-last
+                  key: raw_device_url_2
+            - name: stetl_intemo_token
+              valueFrom:
+                secretKeyRef:
+                  name: etl-last
+                  key: token
+            - name: stetl_pg_host
+              value: "postgres"
+            - name: stetl_pg_database
+              value: "gis"
+            - name: stetl_pg_user
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: username
+            - name: stetl_pg_password
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: password
+            - name: stetl_pg_schema_rt
+              value: "smartem_rt"
+            - name: stetl_pg_schema_calibrated
+              value: "smartem_calibrated"
+          restartPolicy: OnFailure

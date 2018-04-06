@@ -53,6 +53,7 @@ $ kubectl create -f ./kubernetes/smartemission/secrets/geoserver.yml
 $ kubectl create -f ./kubernetes/smartemission/secrets/postgres.yml
 $ kubectl create -f ./kubernetes/smartemission/secrets/basic-auth.yml
 $ kubectl create -f ./kubernetes/smartemission/secrets/sos52n.yml
+$ kubectl create -f ./kubernetes/smartemission/secrets/etl-last.yml
 ```
 
 ### Services / Deployments
@@ -66,4 +67,10 @@ $ kubectl create -f ./kubernetes/smartemission/services/basic-auth-geoserver.yml
 $ kubectl create -f ./kubernetes/smartemission/services/sos52n.yml
 $ kubectl create -f ./kubernetes/smartemission/services/sosemu.yml
 $ kubectl create -f ./kubernetes/smartemission/ingress.yml
+```
+
+### CronJobs
+
+```
+$ kubectl create -f ./kubernetes/smartemission/cronjobs/etl-last.yml
 ```
