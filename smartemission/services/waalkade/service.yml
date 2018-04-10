@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: waalkade-service
+  namespace: smartemission
+  labels:
+    app: waalkade
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: waalkade

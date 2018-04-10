@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: waalkade-deployment
+  namespace: smartemission
+  labels:
+    app: waalkade
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: waalkade
+  template:
+    metadata:
+      labels:
+        app: waalkade
+    spec:
+      containers:
+      - name: waalkade
+        image: smartemission/se-waalkade:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
