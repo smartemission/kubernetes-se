@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: home-deployment
+  namespace: smartemission
+  labels:
+    app: home
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: home
+  template:
+    metadata:
+      labels:
+        app: home
+    spec:
+      containers:
+      - name: home
+        image: smartemission/se-home:latest
+        imagePullPolicy: Always
+        env:
+          - name: HOME_LOG_LEVEL
+            value: "20"
+        ports:
+        - containerPort: 80

@@ -66,20 +66,34 @@ $ kubectl create -f ./smartemission/services/postgres-external/service.yml
 
 $ kubectl create -f ./smartemission/services/geoserver/deployment.yml
 $ kubectl create -f ./smartemission/services/geoserver/service.yml
+$ kubectl create -f ./smartemission/services/geoserver/ingress.yml
 
 $ kubectl create -f ./smartemission/services/basic-auth-geoserver/deployment.yml
 $ kubectl create -f ./smartemission/services/basic-auth-geoserver/service.yml
+$ kubectl create -f ./smartemission/services/basic-auth-geoserver/ingress.yml
 
 $ kubectl create -f ./smartemission/services/sos52n/deployment.yml
 $ kubectl create -f ./smartemission/services/sos52n/service.yml
+$ kubectl create -f ./smartemission/services/sos52n/ingress.yml
 
 $ kubectl create -f ./smartemission/services/sosemu/deployment.yml
 $ kubectl create -f ./smartemission/services/sosemu/service.yml
+$ kubectl create -f ./smartemission/services/sosemu/ingress.yml
 
 $ kubectl create -f ./smartemission/services/influxdb/service.yml
 $ kubectl create -f ./smartemission/services/influxdb/statefulset.yml
 
-$ kubectl create -f ./smartemission/ingress.yml
+$ kubectl create -f ./smartemission/services/smartapp/deployment.yml
+$ kubectl create -f ./smartemission/services/smartapp/service.yml
+$ kubectl create -f ./smartemission/services/smartapp/ingress.yml
+
+$ kubectl create -f ./smartemission/services/waalkade/deployment.yml
+$ kubectl create -f ./smartemission/services/waalkade/service.yml
+$ kubectl create -f ./smartemission/services/waalkade/ingress.yml
+
+$ kubectl create -f ./smartemission/services/home/deployment.yml
+$ kubectl create -f ./smartemission/services/home/service.yml
+$ kubectl create -f ./smartemission/services/home/ingress.yml
 ```
 
 ### CronJobs
