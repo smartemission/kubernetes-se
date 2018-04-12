@@ -94,6 +94,10 @@ $ kubectl create -f ./smartemission/services/waalkade/ingress.yml
 $ kubectl create -f ./smartemission/services/home/deployment.yml
 $ kubectl create -f ./smartemission/services/home/service.yml
 $ kubectl create -f ./smartemission/services/home/ingress.yml
+
+$ kubectl create -f ./smartemission/services/heron/deployment.yml
+$ kubectl create -f ./smartemission/services/heron/service.yml
+$ kubectl create -f ./smartemission/services/heron/ingress.yml
 ```
 
 ### CronJobs

@@ -1,15 +1,15 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: waalkade-deployment
+  name: heron-deployment
   namespace: smartemission
   labels:
-    app: waalkade
+    app: heron
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: waalkade
+      app: heron
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -19,11 +19,11 @@ spec:
   template:
     metadata:
       labels:
-        app: waalkade
+        app: heron
     spec:
       containers:
-      - name: waalkade
-        image: smartemission/se-waalkade:latest
+      - name: heron
+        image: smartemission/se-heron:1.0.1
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
