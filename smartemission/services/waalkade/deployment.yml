@@ -24,7 +24,6 @@ spec:
       containers:
       - name: waalkade
         image: smartemission/se-waalkade:latest
-        imagePullPolicy: Always
         livenessProbe:
           httpGet:
             path: /

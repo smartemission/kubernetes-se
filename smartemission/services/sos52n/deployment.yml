@@ -18,7 +18,6 @@ spec:
       containers:
       - name: sos52n
         image: smartemission/se-sos52n:latest
-        imagePullPolicy: Always
         env:
           - name: SOS_USERNAME
             valueFrom:

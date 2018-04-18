@@ -24,7 +24,6 @@ spec:
       containers:
       - name: home
         image: smartemission/se-home:latest
-        imagePullPolicy: Always
         livenessProbe:
           httpGet:
             path: /

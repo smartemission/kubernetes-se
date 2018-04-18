@@ -24,7 +24,6 @@ spec:
       containers:
       - name: smartapp
         image: smartemission/se-smartapp:latest
-        imagePullPolicy: Always
         livenessProbe:
           httpGet:
             path: /
