@@ -23,16 +23,16 @@ spec:
     spec:
       containers:
       - name: smartapp
-        image: smartemission/se-smartapp:latest
+        image: smartemission/se-smartapp:1.0.0
         livenessProbe:
           httpGet:
-            path: /
+            path: /smartapp/
             port: 80
           initialDelaySeconds: 3
           periodSeconds: 3
         readinessProbe:
           httpGet:
-            path: /
+            path: /smartapp/
             port: 80
           initialDelaySeconds: 3
           periodSeconds: 3

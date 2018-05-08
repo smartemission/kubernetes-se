@@ -1,0 +1,26 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: postgres-pool-deployment
+  namespace: smartemission
+  labels:
+    app: postgres-pool
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-pool
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app: postgres-pool
+    spec:
+      containers:
+      - name: postgres-pool
+        image: ca0abinary/pgpool2-container:latest
+        env:
+          - name: PGPOOL_BACKENDS
+            value: "1:postgres:5432"
+        ports:
+        - containerPort: 5432

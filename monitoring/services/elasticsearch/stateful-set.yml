@@ -1,0 +1,54 @@
+apiVersion: apps/v1beta2
+kind: StatefulSet
+metadata:
+  name: elasticsearch-logging
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: elasticsearch-logging
+  serviceName: "elasticsearch-logging"
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: elasticsearch-logging
+    spec:
+      containers:
+      - image: k8s.gcr.io/elasticsearch:v5.6.4
+        name: elasticsearch-logging
+        resources:
+          limits:
+            cpu: 1000m
+          requests:
+            cpu: 100m
+        ports:
+        - containerPort: 9200
+          name: db
+          protocol: TCP
+        - containerPort: 9300
+          name: transport
+          protocol: TCP
+        volumeMounts:
+        - name: elasticsearch-logging-storage
+          mountPath: /data
+        env:
+        - name: "NAMESPACE"
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+      initContainers:
+      - image: alpine:3.6
+        command: ["/sbin/sysctl", "-w", "vm.max_map_count=262144"]
+        name: elasticsearch-logging-init
+        securityContext:
+          privileged: true
+  volumeClaimTemplates:
+  - metadata:
+      name: elasticsearch-logging-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: default
+      resources:
+        requests:
+          storage: 10Gi

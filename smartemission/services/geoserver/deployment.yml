@@ -23,21 +23,21 @@ spec:
     spec:
       containers:
       - name: geoserver
-        image: smartemission/se-geoserver:1.0.0
+        image: smartemission/se-geoserver:2.12.1-1
         livenessProbe:
           httpGet:
             path: /geoserver/web/
             port: 8080
-          initialDelaySeconds: 30
+          initialDelaySeconds: 240
           periodSeconds: 30
-          timeoutSeconds: 5
+          timeoutSeconds: 10
         readinessProbe:
           httpGet:
             path: /geoserver/web/
             port: 8080
-          initialDelaySeconds: 30
+          initialDelaySeconds: 240
           periodSeconds: 30
-          timeoutSeconds: 5
+          timeoutSeconds: 10
         env:
           - name: GS_USERNAME
             valueFrom:
@@ -63,5 +63,12 @@ spec:
                 key: password
           - name: PROXY_BASE_URL
             value: "https://pdok.smartemission.nl/geoserver/"
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "1.5Gi"
+          requests:
+            cpu: "500m"
+            memory: "1.5Gi"
         ports:
         - containerPort: 8080

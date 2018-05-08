@@ -53,7 +53,7 @@ $ kubectl create -f ./smartemission/secrets/geoserver.yml
 $ kubectl create -f ./smartemission/secrets/postgres.yml
 $ kubectl create -f ./smartemission/secrets/basic-auth.yml
 $ kubectl create -f ./smartemission/secrets/sos52n.yml
-$ kubectl create -f ./smartemission/secrets/etl-last.yml
+$ kubectl create -f ./smartemission/secrets/data-collectors.yml
 ```
 
 ### Services / Deployments
@@ -98,10 +98,79 @@ $ kubectl create -f ./smartemission/services/home/ingress.yml
 $ kubectl create -f ./smartemission/services/heron/deployment.yml
 $ kubectl create -f ./smartemission/services/heron/service.yml
 $ kubectl create -f ./smartemission/services/heron/ingress.yml
+
+$ kubectl create -f ./smartemission/services/mosquitto/deployment.yml
+$ kubectl create -f ./smartemission/services/mosquitto/service.yml
+
+$ kubectl create -f ./smartemission/services/gost/deployment.yml
+$ kubectl create -f ./smartemission/services/gost/service.yml
+$ kubectl create -f ./smartemission/services/gost/ingress.yml
+
+$ kubectl create -f ./smartemission/services/admin/deployment.yml
+$ kubectl create -f ./smartemission/services/admin/service.yml
+$ kubectl create -f ./smartemission/services/admin/ingress.yml
+
+$ kubectl create -f ./smartemission/services/postgres-pool/deployment.yml
+$ kubectl create -f ./smartemission/services/postgres-pool/service.yml
 ```
 
 ### CronJobs
 
 ```
 $ kubectl create -f ./smartemission/cronjobs/etl-last.yml
+$ kubectl create -f ./smartemission/cronjobs/etl-whale.yml
+$ kubectl create -f ./smartemission/cronjobs/etl-refiner.yml
+$ kubectl create -f ./smartemission/cronjobs/etl-sta-publisher.yml
+```
+
+## Monitoring
+
+### Namespace
+
+```
+$ kubectl create -f ./monitoring/namespace.yml
+```
+
+### Secrets
+
+Secrets not included in the repository.
+
+```
+$ kubectl create -f ./monitoring/secrets/basic-auth.yml
+$ kubectl create -f ./monitoring/secrets/pgadmin.yml
+```
+
+### Services / Deployments
+
+```
+$ kubectl create -f ./monitoring/services/elasticsearch/service.yml
+$ kubectl create -f ./monitoring/services/elasticsearch/stateful-set.yml
+
+$ kubectl create -f ./monitoring/services/fluentd/config-map.yml
+$ kubectl create -f ./monitoring/services/fluentd/daemon-set.yml
+
+$ kubectl create -f ./monitoring/services/kibana/deployment.yml
+$ kubectl create -f ./monitoring/services/kibana/service.yml
+$ kubectl create -f ./monitoring/services/kibana/ingress.yml
+
+$ kubectl create -f ./monitoring/services/pgadmin/pvc.yml
+$ kubectl create -f ./monitoring/services/pgadmin/deployment.yml
+$ kubectl create -f ./monitoring/services/pgadmin/service.yml
+$ kubectl create -f ./monitoring/services/pgadmin/ingress.yml
+```
+
+## Kube-System
+
+### Secrets
+
+Secrets not included in the repository.
+
+```
+$ kubectl create -f ./kube-system/secrets/basic-auth.yml
+```
+
+### Services / Deployments
+
+```
+$ kubectl create -f ./kube-system/services/kubernetes-dashboard/ingress.yml
 ```

@@ -1,15 +1,15 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: sosemu-deployment
+  name: gost-deployment
   namespace: smartemission
   labels:
-    app: sosemu
+    app: gost
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: sosemu
+      app: gost
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -19,43 +19,50 @@ spec:
   template:
     metadata:
       labels:
-        app: sosemu
+        app: gost
     spec:
       containers:
-      - name: sosemu
-        image: smartemission/se-sosemu:latest
+      - name: gost
+        image: smartemission/se-gost:1.0.0
         livenessProbe:
           httpGet:
-            path: /
-            port: 80
-          initialDelaySeconds: 3
+            path: /v1.0/Sensors
+            port: 8080
+          initialDelaySeconds: 30
           periodSeconds: 30
           timeoutSeconds: 5
         readinessProbe:
           httpGet:
-            path: /
-            port: 80
-          initialDelaySeconds: 3
+            path: /v1.0/Sensors
+            port: 8080
+          initialDelaySeconds: 30
           periodSeconds: 30
           timeoutSeconds: 5
         env:
-          - name: SOSEMU_DB_HOST
-            value: "postgres-pool"
-          - name: SOSEMU_DB_PORT
+          - name: GOST_SERVER_EXTERNAL_URI
+            value: "https://pdok.smartemission.nl/gost"
+          - name: GOST_DB_HOST
+            value: "postgres"
+          - name: GOST_DB_PORT
             value: "5432"
-          - name: SOSEMU_DB_NAME
+          - name: GOST_DB_DATABASE
             value: "gis"
-          - name: SOSEMU_DB_SCHEMA
-            value: "smartem_rt"
-          - name: SOSEMU_DB_USER
+          - name: GOST_DB_USER
             valueFrom:
               secretKeyRef:
                 name: postgres
                 key: username
-          - name: SOSEMU_DB_PASSWORD
+          - name: GOST_DB_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: postgres
                 key: password
+        resources:
+          limits:
+            cpu: "200m"
+            memory: "150M"
+          requests:
+            cpu: "200m"
+            memory: "150M"
         ports:
-        - containerPort: 80
+        - containerPort: 8080

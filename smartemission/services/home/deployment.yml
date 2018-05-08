@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: home
-        image: smartemission/se-home:latest
+        image: smartemission/se-home:1.0.0
         livenessProbe:
           httpGet:
             path: /

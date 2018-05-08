@@ -1,36 +1,25 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: etl-last
+  name: etl-refiner
   namespace: smartemission
 spec:
-  schedule: "*/3 * * * *"
+  schedule: "*/15 * * * *"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       template:
         spec:
           containers:
-          - name: etl-last
-            image: smartemission/se-stetl:1.0.0
+          - name: etl-refiner
+            image: smartemission/se-stetl:1.0.1
             args:
-            - last
+            - refiner
             env:
-            - name: stetl_raw_device_url_1
-              valueFrom:
-                secretKeyRef:
-                  name: data-collectors
-                  key: raw_device_url_1
-            - name: stetl_raw_device_url_2
-              valueFrom:
-                secretKeyRef:
-                  name: data-collectors
-                  key: raw_device_url_2
-            - name: stetl_intemo_token
-              valueFrom:
-                secretKeyRef:
-                  name: data-collectors
-                  key: token
+            - name: stetl_refiner_max_input_records
+              value: "4000"
+            - name: stetl_refiner_raw_read_once
+              value: "true"
             - name: stetl_pg_host
               value: "postgres"
             - name: stetl_pg_database
@@ -45,8 +34,10 @@ spec:
                 secretKeyRef:
                   name: postgres
                   key: password
-            - name: stetl_pg_schema_rt
-              value: "smartem_rt"
+            - name: stetl_pg_schema_raw
+              value: "smartem_raw"
+            - name: stetl_pg_schema_refined
+              value: "smartem_refined"
             - name: stetl_pg_schema_calibrated
               value: "smartem_calibrated"
           restartPolicy: OnFailure

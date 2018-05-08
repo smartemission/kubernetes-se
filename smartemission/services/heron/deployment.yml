@@ -23,18 +23,25 @@ spec:
     spec:
       containers:
       - name: heron
-        image: smartemission/se-heron:1.0.2
+        image: smartemission/se-heron:1.0.3
         livenessProbe:
           httpGet:
             path: /
             port: 80
-          initialDelaySeconds: 3
+          initialDelaySeconds: 30
           periodSeconds: 3
         readinessProbe:
           httpGet:
             path: /
             port: 80
-          initialDelaySeconds: 3
+          initialDelaySeconds: 30
           periodSeconds: 3
+        resources:
+          limits:
+            cpu: "50m"
+            memory: "150M"
+          requests:
+            cpu: "50m"
+            memory: "150M"
         ports:
         - containerPort: 80

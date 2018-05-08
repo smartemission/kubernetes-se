@@ -6,10 +6,16 @@ metadata:
   labels:
     app: sos52n
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: sos52n
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  revisionHistoryLimit: 1
   template:
     metadata:
       labels:
@@ -17,7 +23,21 @@ spec:
     spec:
       containers:
       - name: sos52n
-        image: smartemission/se-sos52n:latest
+        image: smartemission/se-sos52n:4.3.7-3
+        livenessProbe:
+          httpGet:
+            path: /sos52n?service=SOS&request=GetCapabilities
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /sos52n?service=SOS&request=GetCapabilities
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 5
         env:
           - name: SOS_USERNAME
             valueFrom:
@@ -41,7 +61,9 @@ spec:
               secretKeyRef:
                 name: postgres
                 key: password
-          - name: DB_SCHEMA
+          - name: SOS_DB_SCHEMA
             value: "sos52n1"
+          - name: SOS_SERVICE_URL
+            value: "https://pdok.smartemission.nl/sos52n/service"
         ports:
         - containerPort: 8080

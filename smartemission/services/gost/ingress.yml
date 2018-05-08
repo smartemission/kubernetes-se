@@ -1,19 +1,27 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: sos52n
+  name: gost
   namespace: smartemission
   annotations:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: "/sos52n"
+    nginx.ingress.kubernetes.io/rewrite-target: "/"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      limit_except GET {
+        deny   all;
+      }
 spec:
+  tls:
+  - secretName: pdok-smartemission-nl-tls
+    hosts:
+    - pdok.smartemission.nl
   rules:
   - host: pdok.smartemission.nl
     http:
       paths:
-      - path: /sos52n
+      - path: /gost
         backend:
-          serviceName: sos52n-service
+          serviceName: gost-service
           servicePort: 8080

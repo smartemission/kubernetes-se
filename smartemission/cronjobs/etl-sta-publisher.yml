@@ -1,0 +1,47 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: etl-sta-publisher
+  namespace: smartemission
+spec:
+  schedule: "*/10 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: etl-sta-publisher
+            image: smartemission/se-stetl:1.0.1
+            args:
+            - stapublisher
+            env:
+            - name: stetl_pg_host
+              value: "postgres"
+            - name: stetl_pg_database
+              value: "gis"
+            - name: stetl_pg_user
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: username
+            - name: stetl_pg_password
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: password
+            - name: stetl_pg_schema_refined
+              value: "smartem_refined"
+            - name: stetl_stapublisher_max_input_records
+              value: "10000"
+            - name: "stetl_sta_host"
+              value: "gost-service"
+            - name: "stetl_sta_port"
+              value: "8080"
+            - name: "stetl_sta_path"
+              value: "/v1.0"
+            - name: "stetl_sta_user"
+              value: ""
+            - name: "stetl_sta_password"
+              value: ""
+          restartPolicy: OnFailure

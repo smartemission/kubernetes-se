@@ -1,20 +1,20 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: etl-last
+  name: etl-whale
   namespace: smartemission
 spec:
-  schedule: "*/3 * * * *"
+  schedule: "12,25,37,49 * * * *"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       template:
         spec:
           containers:
-          - name: etl-last
-            image: smartemission/se-stetl:1.0.0
+          - name: etl-whale
+            image: smartemission/se-stetl:1.0.1
             args:
-            - last
+            - harvester_whale
             env:
             - name: stetl_raw_device_url_1
               valueFrom:
@@ -45,8 +45,10 @@ spec:
                 secretKeyRef:
                   name: postgres
                   key: password
-            - name: stetl_pg_schema_rt
-              value: "smartem_rt"
-            - name: stetl_pg_schema_calibrated
-              value: "smartem_calibrated"
+            - name: stetl_pg_schema_raw
+              value: "smartem_raw"
+            - name: stetl_max_proc_time_secs
+              value: "660"
+            - name: stetl_api_interval_secs
+              value: "-1"
           restartPolicy: OnFailure
