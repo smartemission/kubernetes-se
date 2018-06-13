@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: pgadmin-service
+  name: phppgadmin-service
   namespace: monitoring
   labels:
-    app: pgadmin
+    app: phppgadmin
 spec:
   ports:
   - port: 80
   selector:
-    app: pgadmin
+    app: phppgadmin

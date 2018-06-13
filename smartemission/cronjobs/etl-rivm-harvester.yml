@@ -1,7 +1,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: etl-refiner
+  name: etl-rivm-harvester
   namespace: smartemission
 spec:
   schedule: "*/15 * * * *"
@@ -11,15 +11,17 @@ spec:
       template:
         spec:
           containers:
-          - name: etl-refiner
+          - name: etl-rivm-harvester
             image: smartemission/se-stetl:1.0.4
             args:
-            - refiner
+            - harvester_rivm
             env:
-            - name: stetl_refiner_max_input_records
-              value: "4000"
-            - name: stetl_refiner_raw_read_once
-              value: "true"
+            - name: stetl_rivm_sos_base_url
+              value: "http://inspire.rivm.nl/sos/eaq/api/v1/timeseries/"
+            - name: stetl_max_proc_time_secs
+              value: "660"
+            - name: stetl_api_interval_secs
+              value: "-1"
             - name: stetl_pg_host
               value: "postgres"
             - name: stetl_pg_database
@@ -36,10 +38,8 @@ spec:
                   key: password
             - name: stetl_pg_schema_raw
               value: "smartem_raw"
-            - name: stetl_pg_schema_refined
-              value: "smartem_refined"
-            - name: stetl_pg_schema_calibrated
-              value: "smartem_calibrated"
+            - name: stetl_pg_schema_harvest_rivm
+              value: "smartem_harvest_rivm"
             - name: stetl_influx_host
               value: "influxdb-service"
             - name: stetl_influx_port

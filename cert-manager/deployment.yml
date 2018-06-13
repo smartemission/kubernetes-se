@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cert-manager
@@ -7,15 +7,19 @@ metadata:
     app: cert-manager
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: cert-manager
   template:
     metadata:
       labels:
         app: cert-manager
     spec:
+      serviceAccountName: cert-manager
       containers:
       - name: cert-manager
         image: quay.io/jetstack/cert-manager-controller:v0.2.3
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         args:
           - --cluster-resource-namespace=$(POD_NAMESPACE)
         env:
@@ -25,4 +29,4 @@ spec:
               fieldPath: metadata.namespace
       - name: ingress-shim
         image: quay.io/jetstack/cert-manager-ingress-shim:v0.2.3
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent

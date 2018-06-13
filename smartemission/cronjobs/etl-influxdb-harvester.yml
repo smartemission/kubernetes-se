@@ -1,36 +1,39 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: etl-last
+  name: etl-influxdb-harvester
   namespace: smartemission
 spec:
-  schedule: "*/3 * * * *"
+  schedule: "*/15 * * * *"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       template:
         spec:
           containers:
-          - name: etl-last
+          - name: etl-influxdb-harvester
             image: smartemission/se-stetl:1.0.4
             args:
-            - last
+            - harvester_influx
             env:
-            - name: stetl_raw_device_url_1
+            - name: stetl_influx_host
+              value: "test.smartemission.nl"
+            - name: stetl_influx_port
+              value: "8086"
+            - name: stetl_influx_as_database
+              value: "airsenseur"
+            - name: stetl_influx_as_reader
               valueFrom:
                 secretKeyRef:
-                  name: data-collectors
-                  key: raw_device_url_1
-            - name: stetl_raw_device_url_2
+                  name: influxdb-reader
+                  key: username
+            - name: stetl_influx_as_reader_password
               valueFrom:
                 secretKeyRef:
-                  name: data-collectors
-                  key: raw_device_url_2
-            - name: stetl_intemo_token
-              valueFrom:
-                secretKeyRef:
-                  name: data-collectors
-                  key: token
+                  name: influxdb-reader
+                  key: password         
+            - name: stetl_max_proc_time_secs
+              value: "660"
             - name: stetl_pg_host
               value: "postgres"
             - name: stetl_pg_database
@@ -45,8 +48,6 @@ spec:
                 secretKeyRef:
                   name: postgres
                   key: password
-            - name: stetl_pg_schema_rt
-              value: "smartem_rt"
-            - name: stetl_pg_schema_calibrated
-              value: "smartem_calibrated"
+            - name: stetl_pg_schema_raw
+              value: "smartem_raw"
           restartPolicy: OnFailure

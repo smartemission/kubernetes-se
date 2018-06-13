@@ -17,11 +17,11 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: influxdb
-        image: influxdb:1.5.1
+        image: influxdb:1.5.3
         ports:
         - containerPort: 8086
         volumeMounts:
-        - mountPath: /data
+        - mountPath: /var/lib/influxdb
           name: influxdb-storage
   volumeClaimTemplates:
   - metadata:

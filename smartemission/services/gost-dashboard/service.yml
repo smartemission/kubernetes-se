@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gost-dashboard-service
+  namespace: smartemission
+  labels:
+    app: gost-dashboard
+spec:
+  ports:
+  - port: 8080
+  selector:
+    app: gost-dashboard

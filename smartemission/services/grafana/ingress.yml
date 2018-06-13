@@ -1,22 +1,23 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: pgadmin
-  namespace: monitoring
+  name: grafana
+  namespace: smartemission
   annotations:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/add-base-url: "true"
     nginx.ingress.kubernetes.io/rewrite-target: "/"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 spec:
+  tls:
+  - secretName: pdok-smartemission-nl-tls
+    hosts:
+    - pdok.smartemission.nl
   rules:
   - host: pdok.smartemission.nl
     http:
       paths:
-      - path: /pgadmin
+      - path: /grafana
         backend:
-          serviceName: pgadmin-service
-          servicePort: 80
+          serviceName: grafana-service
+          servicePort: 3000

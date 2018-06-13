@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: heron
-        image: smartemission/se-heron:1.0.3
+        image: smartemission/se-heron:1.0.4
         livenessProbe:
           httpGet:
             path: /

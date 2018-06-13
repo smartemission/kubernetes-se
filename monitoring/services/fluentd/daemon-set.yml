@@ -11,10 +11,8 @@ spec:
     metadata:
       labels:
         app: fluentd-es
-      annotations:
-        scheduler.alpha.kubernetes.io/critical-pod: ''
     spec:
-      priorityClassName: system-node-critical
+      serviceAccountName: fluentd-es
       containers:
       - name: fluentd-es
         image: k8s.gcr.io/fluentd-elasticsearch:v2.0.4

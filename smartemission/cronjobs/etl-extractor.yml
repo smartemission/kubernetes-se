@@ -1,25 +1,25 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: etl-refiner
+  name: etl-extractor
   namespace: smartemission
 spec:
-  schedule: "*/15 * * * *"
+  schedule: "*/20 * * * *"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       template:
         spec:
           containers:
-          - name: etl-refiner
+          - name: etl-extractor
             image: smartemission/se-stetl:1.0.4
             args:
-            - refiner
+            - extractor
             env:
-            - name: stetl_refiner_max_input_records
-              value: "4000"
-            - name: stetl_refiner_raw_read_once
-              value: "true"
+            - name: stetl_extractor_max_input_records
+              value: "2000"
+            - name: stetl_extractor_raw_read_once
+              value: "True"
             - name: stetl_pg_host
               value: "postgres"
             - name: stetl_pg_database
@@ -38,16 +38,16 @@ spec:
               value: "smartem_raw"
             - name: stetl_pg_schema_refined
               value: "smartem_refined"
-            - name: stetl_pg_schema_calibrated
-              value: "smartem_calibrated"
+            - name: stetl_pg_schema_extracted
+              value: "smartem_extracted"
             - name: stetl_influx_host
               value: "influxdb-service"
             - name: stetl_influx_port
               value: "8086"
             - name: stetl_influx_se_database
               value: "smartemission"
-            - name: stetl_influx_se_measurement_refined
-              value: "joserefined"
+            - name: stetl_influx_se_measurement_extract
+              value: "joseextract"
             - name: stetl_influx_se_writer
               valueFrom:
                 secretKeyRef:
@@ -57,5 +57,5 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: influxdb-writer
-                  key: password         
+                  key: password    
           restartPolicy: OnFailure

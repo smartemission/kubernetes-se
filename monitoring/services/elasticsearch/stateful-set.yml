@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: elasticsearch-logging
@@ -9,40 +9,68 @@ spec:
       app: elasticsearch-logging
   serviceName: "elasticsearch-logging"
   replicas: 3
+  updateStrategy:
+    type: RollingUpdate
   template:
     metadata:
       labels:
         app: elasticsearch-logging
     spec:
-      containers:
-      - image: k8s.gcr.io/elasticsearch:v5.6.4
-        name: elasticsearch-logging
-        resources:
-          limits:
-            cpu: 1000m
-          requests:
-            cpu: 100m
-        ports:
-        - containerPort: 9200
-          name: db
-          protocol: TCP
-        - containerPort: 9300
-          name: transport
-          protocol: TCP
-        volumeMounts:
-        - name: elasticsearch-logging-storage
-          mountPath: /data
-        env:
-        - name: "NAMESPACE"
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.namespace
+      serviceAccountName: elasticsearch-logging
+      securityContext:
+        fsGroup: 1000
       initContainers:
       - image: alpine:3.6
         command: ["/sbin/sysctl", "-w", "vm.max_map_count=262144"]
         name: elasticsearch-logging-init
         securityContext:
           privileged: true
+      containers:
+      - image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4
+        name: elasticsearch-logging
+        resources:
+          requests:
+            cpu: 500m
+            memory: 3Gi
+        securityContext:
+          privileged: true
+          runAsUser: 1000
+          capabilities:
+            add:
+            - IPC_LOCK
+            - SYS_RESOURCE
+        ports:
+        - containerPort: 9200
+          name: http
+          protocol: TCP
+        - containerPort: 9300
+          name: transport
+          protocol: TCP
+        volumeMounts:
+        - name: elasticsearch-logging-storage
+          mountPath: /usr/share/elasticsearch/data
+        - name: elasticsearch-logging-yml
+          mountPath: /usr/share/elasticsearch/config/elasticsearch.yml
+          subPath: elasticsearch.yml
+        env:
+        - name: ES_JAVA_OPTS
+          valueFrom:
+              configMapKeyRef:
+                  name: elasticsearch-logging-config
+                  key: ES_JAVA_OPTS
+        readinessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /_cluster/health?local=true
+            port: 9200
+          initialDelaySeconds: 5
+      volumes:
+        - name: elasticsearch-logging-yml
+          configMap:
+            name: elasticsearch-logging-config
+            items:
+                - key: elasticsearch.yml
+                  path: elasticsearch.yml
   volumeClaimTemplates:
   - metadata:
       name: elasticsearch-logging-storage
@@ -51,4 +79,4 @@ spec:
       storageClassName: default
       resources:
         requests:
-          storage: 10Gi
+          storage: 50Gi

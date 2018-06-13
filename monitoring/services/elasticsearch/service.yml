@@ -7,8 +7,9 @@ metadata:
     app: elasticsearch-logging
 spec:
   ports:
-  - port: 9200
-    protocol: TCP
-    targetPort: db
+  - name: http
+    port: 9200
+  - name: transport
+    port: 9300
   selector:
     app: elasticsearch-logging

@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: smartapp
-        image: smartemission/se-smartapp:1.0.0
+        image: smartemission/se-smartapp:1.0.1
         livenessProbe:
           httpGet:
             path: /smartapp/

@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: influxdb
+  name: admin
   namespace: smartemission
   annotations:
     kubernetes.io/ingress.class: "nginx"
@@ -16,7 +16,7 @@ spec:
   - host: pdok.smartemission.nl
     http:
       paths:
-      - path: /influxdb
+      - path: /gost-dashboard
         backend:
-          serviceName: influxdb-service
-          servicePort: 8086
+          serviceName: gost-dashboard-service
+          servicePort: 8080
