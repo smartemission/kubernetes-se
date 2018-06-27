@@ -16,7 +16,7 @@ spec:
             args:
             - harvester_influx
             env:
-            - name: stetl_influx_host
+            - name: stetl_influx_dc1_host
               value: "dc1.smartemission.nl"
             - name: stetl_influx_port
               value: "8086"
