@@ -12,12 +12,12 @@ spec:
         spec:
           containers:
           - name: etl-influxdb-harvester
-            image: smartemission/se-stetl:1.0.4
+            image: smartemission/se-stetl:1.0.9
             args:
             - harvester_influx
             env:
             - name: stetl_influx_host
-              value: "test.smartemission.nl"
+              value: "dc1.smartemission.nl"
             - name: stetl_influx_port
               value: "8086"
             - name: stetl_influx_as_database
