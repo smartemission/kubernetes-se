@@ -1,3 +1,2 @@
-smartemission/secrets
-monitoring/secrets
+*/secrets
 smartemission/services/postgres-external.yml
