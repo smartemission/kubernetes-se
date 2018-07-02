@@ -48,7 +48,7 @@ spec:
             - name: stetl_pg_schema_raw
               value: "smartem_raw"
             - name: stetl_max_proc_time_secs
-              value: "660"
+              value: "280"
             - name: stetl_api_interval_secs
               value: "-1"
           restartPolicy: OnFailure
