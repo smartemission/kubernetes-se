@@ -12,7 +12,7 @@ spec:
         spec:
           containers:
           - name: etl-rivm-harvester
-            image: smartemission/se-stetl:1.0.13
+            image: smartemission/se-stetl:1.0.14
             args:
             - harvester_rivm
             env:

@@ -12,7 +12,7 @@ spec:
         spec:
           containers:
           - name: etl-sta-publisher
-            image: smartemission/se-stetl:1.0.13
+            image: smartemission/se-stetl:1.0.14
             args:
             - stapublisher
             env:
