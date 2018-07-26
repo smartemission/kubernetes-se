@@ -12,7 +12,7 @@ spec:
         spec:
           containers:
           - name: etl-refiner
-            image: smartemission/se-stetl:1.0.14
+            image: smartemission/se-stetl:1.0.15
             args:
             - refiner
             env:

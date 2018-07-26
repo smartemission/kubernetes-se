@@ -12,7 +12,7 @@ spec:
         spec:
           containers:
           - name: etl-sos-publisher
-            image: smartemission/se-stetl:1.0.14
+            image: smartemission/se-stetl:1.0.15
             args:
             - sospublisher
             env:
