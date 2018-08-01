@@ -1,0 +1,29 @@
+apiVersion: apps/v1beta2
+kind: Job
+metadata:
+  name: influxdb-restore
+spec:
+  template:
+    metadata:
+      name: influxdb-restore
+      labels:
+        task: influxdb-restore
+    spec:
+      volumes:
+      - name: influx
+        persistentVolumeClaim:
+          claimName: influxdb-storage
+      - name: backup
+        persistentVolumeClaim:
+          claimName: influxdb-backup
+      containers:
+        - name: influx
+          image: "influxdb:1.5.3"
+          command: ["/bin/sh"]
+          args: ["-c", "influxd restore -metadir /var/lib/influxdb/meta -database smartemission -datadir /var/lib/influxdb/data /backup/"]
+          volumeMounts:
+          - mountPath: /var/lib/influxdb
+            name: influx
+          - mountPath: /backup
+            name: backup
+      restartPolicy: Never
