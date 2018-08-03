@@ -24,8 +24,8 @@ spec:
       volumes:
         - name: backup
           persistentVolumeClaim:
-            claimName: influxdb-backup
+            claimName: influxdb-backup-influxdb-0
         - name: influx
           persistentVolumeClaim:
-            claimName: influxdb-storage
+            claimName: influxdb-storage-influxdb-0
       restartPolicy: Never
