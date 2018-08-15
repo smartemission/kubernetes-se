@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: sos52n
-        image: smartemission/se-sos52n:4.3.7-3
+        image: smartemission/se-sos52n:4.3.7-7
         livenessProbe:
           httpGet:
             path: /sos52n?service=SOS&request=GetCapabilities
@@ -65,5 +65,12 @@ spec:
             value: "sos52n1"
           - name: SOS_SERVICE_URL
             value: "https://pdok.smartemission.nl/sos52n/service"
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "4.0Gi"
+          requests:
+            cpu: "500m"
+            memory: "2.0Gi"
         ports:
         - containerPort: 8080

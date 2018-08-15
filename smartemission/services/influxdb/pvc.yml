@@ -1,0 +1,26 @@
+# Run this once to make volumes
+apiVersion: apps/v1beta2
+kind: PersistentVolumeClaim
+metadata:
+  name: influxdb-backup
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: default
+  resources:
+    requests:
+      storage: 2Gi
+
+---
+
+apiVersion: apps/v1beta2
+kind: PersistentVolumeClaim
+metadata:
+  name: influxdb-storage
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: default
+  resources:
+    requests:
+      storage: 5Gi

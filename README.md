@@ -1,5 +1,8 @@
 # Kubernetes
 
+The entire SE deployment is subdivided into a set of K8s Namespaces, based on separation 
+of functions. The main operational namespace is `smartemission`.
+
 Onderstaande is een mogelijk security issue. Dit moeten we tzt oplossen.
 
 ```
@@ -20,7 +23,8 @@ $ kubectl apply -f ./ingress-nginx/service.yml
 
 ## Cert-Manager
 
-Let's encrypt cert manager. Set your email address in the files `letsencrypt-staging.clusterissuer.yml` and `letsencrypt-prod.clusterissuer.yml`.
+`Let's encrypt` cert manager. Set your email address in 
+the files `letsencrypt-staging.clusterissuer.yml` and `letsencrypt-prod.clusterissuer.yml`.
 
 ```
 $ kubectl create -f ./cert-manager/namespace.yml
@@ -33,7 +37,7 @@ $ kubectl create -f ./cert-manager/letsencrypt-prod.clusterissuer.yml
 
 ## Smart Emission
 
-The Smart Emission stack
+The main Smart Emission stack.
 
 ### Namespace
 
@@ -65,7 +69,8 @@ $ kubectl create -f ./smartemission/secrets/grafana.yml
 
 ### Services / Deployments
 
-The `postgres-external.yml` service is not available in the repository. Create your own with the name `postgres`.
+The `postgres-external.yml` service is not available in the repository. 
+Create your own with the name `postgres`.
 
 ```
 $ kubectl create -f ./smartemission/services/postgres-external/deployment.yml
@@ -124,15 +129,61 @@ $ kubectl create -f ./smartemission/services/postgres-pool/service.yml
 
 ### CronJobs
 
+Harvesters:
+
 ```
 $ kubectl create -f ./smartemission/cronjobs/etl-last.yml
 $ kubectl create -f ./smartemission/cronjobs/etl-whale.yml
+$ kubectl create -f ./smartemission/cronjobs/etl-rivm-harvester.yml
+$ kubectl create -f ./smartemission/cronjobs/etl-influxdb-harvester.yml
+$ kubectl create -f ./smartemission/cronjobs/etl-extractor.yml
+```
+
+Refiners:
+
+```
 $ kubectl create -f ./smartemission/cronjobs/etl-refiner.yml
+```
+
+Publishers:
+
+```
 $ kubectl create -f ./smartemission/cronjobs/etl-sta-publisher.yml
 $ kubectl create -f ./smartemission/cronjobs/etl-rivm-harvester.yml
 $ kubectl create -f ./smartemission/cronjobs/etl-influxdb-harvester.yml
 $ kubectl create -f ./smartemission/cronjobs/etl-sos-publisher.yml
 $ kubectl create -f ./smartemission/cronjobs/etl-extractor.yml
+$ kubectl create -f ./smartemission/cronjobs/etl-sos-publisher.yml
+```
+
+## Collectors
+
+Smart Emission-owned Data Collectors (other DCs are owned by 3rd parties like Intemo and CityGIS). 
+Could also be run outside the cluster.
+
+### Namespace
+
+```
+$ kubectl create -f ./collectors/namespace.yml
+```
+
+### Secrets
+
+Secrets not included in the repository. ??
+
+### Services / Deployments
+
+Mainly an InfluxDB Data Collector for the AirSensEUR project, plus a 
+Grafana Dashboard to view/inspect collected data.
+
+```
+$ kubectl create -f ./collectors/services/dc-airsenseur/service.yml
+$ kubectl create -f ./collectors/services/dc-airsenseur/statefulset.yml
+
+$ kubectl create -f ./collectors/services/dc-grafana/deployment.yml
+$ kubectl create -f ./collectors/services/dc-grafana/service.yml
+$ kubectl create -f ./collectors/services/dc-grafana/ingress.yml
+
 ```
 
 ## Monitoring
@@ -149,7 +200,7 @@ Secrets not included in the repository.
 
 ```
 $ kubectl create -f ./monitoring/secrets/basic-auth.yml
-$ kubectl create -f ./monitoring/secrets/pgadmin.yml
+$ kubectl create -f ./monitoring/secrets/phppgadmin.yml
 ```
 
 ### Services / Deployments
@@ -183,6 +234,11 @@ $ kubectl create -f ./monitoring/services/prometheus/ingress.yml
 $ kubectl create -f ./monitoring/services/grafana/configmap.yml
 $ kubectl create -f ./monitoring/services/grafana/deployment.yml
 $ kubectl create -f ./monitoring/services/grafana/service.yml
+
+$ kubectl create -f ./monitoring/services/phppgadmin/pvc.yml
+$ kubectl create -f ./monitoring/services/phppgadmin/deployment.yml
+$ kubectl create -f ./monitoring/services/phppgadmin/service.yml
+$ kubectl create -f ./monitoring/services/phppgadmin/ingress.yml
 ```
 
 ### CronJobs

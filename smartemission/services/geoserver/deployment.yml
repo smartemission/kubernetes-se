@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: geoserver
-        image: smartemission/se-geoserver:2.12.1-2
+        image: smartemission/se-geoserver:2.12.1-4
         livenessProbe:
           httpGet:
             path: /geoserver/web/
@@ -66,9 +66,9 @@ spec:
         resources:
           limits:
             cpu: "500m"
-            memory: "1.5Gi"
+            memory: "6.0Gi"
           requests:
             cpu: "500m"
-            memory: "1.5Gi"
+            memory: "3.0Gi"
         ports:
         - containerPort: 8080

@@ -23,6 +23,8 @@ spec:
         volumeMounts:
         - mountPath: /var/lib/influxdb
           name: influxdb-storage
+        - mountPath: /backup
+          name: influxdb-backup
   volumeClaimTemplates:
   - metadata:
       name: influxdb-storage
@@ -32,3 +34,11 @@ spec:
       resources:
         requests:
           storage: 5Gi
+  - metadata:
+      name: influxdb-backup
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: default
+      resources:
+        requests:
+          storage: 2Gi

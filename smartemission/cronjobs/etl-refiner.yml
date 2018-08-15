@@ -12,12 +12,12 @@ spec:
         spec:
           containers:
           - name: etl-refiner
-            image: smartemission/se-stetl:1.0.9
+            image: smartemission/se-stetl:1.0.17
             args:
             - refiner
             env:
             - name: stetl_refiner_max_input_records
-              value: "4000"
+              value: "500"
             - name: stetl_refiner_raw_read_once
               value: "true"
             - name: stetl_pg_host
