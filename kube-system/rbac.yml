@@ -1,21 +1,14 @@
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: anonymous-logs-role
-rules:
-- apiGroups: [""]
-  resources: ["nodes/proxy"]
-  verbs: ["create", "get"]
----
-apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: anonymous-logs-binding
+  name: kubernetes-dashboard
+  labels:
+    k8s-app: kubernetes-dashboard
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: anonymous-logs-role
+  name: cluster-admin
 subjects:
-- apiGroup: rbac.authorization.k8s.io
-  kind: User
-  name: system:anonymous
+- kind: ServiceAccount
+  name: kubernetes-dashboard
+  namespace: kube-system

@@ -12,4 +12,5 @@ data:
     discovery.zen.minimum_master_nodes: 1
     xpack.security.enabled: false
     xpack.monitoring.enabled: false
+    xpack.license.self_generated.type: basic
   ES_JAVA_OPTS: -Xms2250m -Xmx2250m
