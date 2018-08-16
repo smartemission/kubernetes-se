@@ -3,7 +3,7 @@
 The entire SE deployment is subdivided into a set of K8s Namespaces, based on separation 
 of functions. The main operational namespace is `smartemission`.
 
-Onderstaande is een mogelijk security issue. Dit moeten we tzt oplossen.
+Om het Kubernetes dashboard de juiste permissies te geven moet het onderstaande commando worden uitgevoerd.
 
 ```
 $ kubectl create -f ./kube-system/rbac.yml
@@ -149,10 +149,6 @@ Publishers:
 
 ```
 $ kubectl create -f ./smartemission/cronjobs/etl-sta-publisher.yml
-$ kubectl create -f ./smartemission/cronjobs/etl-rivm-harvester.yml
-$ kubectl create -f ./smartemission/cronjobs/etl-influxdb-harvester.yml
-$ kubectl create -f ./smartemission/cronjobs/etl-sos-publisher.yml
-$ kubectl create -f ./smartemission/cronjobs/etl-extractor.yml
 $ kubectl create -f ./smartemission/cronjobs/etl-sos-publisher.yml
 ```
 
