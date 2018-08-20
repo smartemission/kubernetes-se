@@ -12,7 +12,7 @@ spec:
         spec:
           containers:
           - name: etl-last
-            image: smartemission/se-stetl:1.0.17
+            image: smartemission/se-stetl:1.0.18
             args:
             - last
             env:
