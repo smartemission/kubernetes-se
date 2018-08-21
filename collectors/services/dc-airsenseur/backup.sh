@@ -25,11 +25,11 @@ then
     exit -1
 fi
 
-CMD="${backup-cmd.sh}"
-
-# On RUNNING Pod/Container
+# Copy and execute script on RUNNING Pod/Container
+CMD="backup-cmd.sh"
 kubectl cp ${CMD} ${NS}/${CONTAINER_NAME}:/${CMD}
 kubectl -n ${NS} exec ${CONTAINER_NAME} -- chmod +x /${CMD}
 kubectl -n ${NS} exec ${CONTAINER_NAME} -- /${CMD}
 kubectl cp ${NS}/${CONTAINER_NAME}:${CONTAINER_DUMP_FILE} ${DUMP_FILE}
+
 # kubectl -n ${NS exec ${CONTAINER_NAME} -- rm -rf ${CONTAINER_BACKUP_DIR} ${CONTAINER_DUMP_FILE}

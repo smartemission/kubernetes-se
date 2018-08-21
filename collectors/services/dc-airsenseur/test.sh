@@ -13,9 +13,9 @@ pushd ${SCRIPT_DIR}
     source influxdb.env
 popd
 
+# Copy and execute script on RUNNING Pod/Container
 CMD="test-cmd.sh"
-
-# On RUNNING Pod/Container
 kubectl cp ${CMD} ${NS}/${CONTAINER_NAME}:/${CMD}
 kubectl -n ${NS} exec ${CONTAINER_NAME} -- chmod +x /${CMD}
 kubectl -n ${NS} exec ${CONTAINER_NAME} -- /${CMD}
+kubectl -n ${NS} exec ${CONTAINER_NAME} -- rm -f /${CMD}

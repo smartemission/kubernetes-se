@@ -27,10 +27,11 @@ then
     exit -1
 fi
 
-# On RUNNING Pod/Container
-kubectl cp restore-cmd.sh ${NS}/${CONTAINER_NAME}:/restore-cmd.sh
-kubectl -n ${NS} exec ${CONTAINER_NAME} -- chmod +x /restore-cmd.sh
+# Copy and execute script on RUNNING Pod/Container
+CMD="restore-cmd.sh"
+kubectl cp ${CMD} ${NS}/${CONTAINER_NAME}:/${CMD}
+kubectl -n ${NS} exec ${CONTAINER_NAME} -- chmod +x /${CMD}
 kubectl cp ${DUMP_FILE} collectors/${CONTAINER_NAME}:${CONTAINER_DUMP_FILE}
-kubectl -n ${NS} exec ${CONTAINER_NAME} -- /restore-cmd.sh
+kubectl -n ${NS} exec ${CONTAINER_NAME} -- /${CMD}
 
 # kubectl -n collectors exec ${CONTAINER_NAME} -- rm -rf ${CONTAINER_DUMP_FILE}
