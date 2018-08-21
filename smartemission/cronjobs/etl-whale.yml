@@ -5,7 +5,7 @@ metadata:
   namespace: smartemission
 spec:
   schedule: "12,25,37,49 * * * *"
-  concurrencyPolicy: Forbid
+  concurrencyPolicy: Replace
   jobTemplate:
     spec:
       template:
