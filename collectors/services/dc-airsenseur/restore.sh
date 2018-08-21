@@ -1,14 +1,25 @@
 #!/bin/bash
 #
 # Restore InfluxDB from local dumpfile.
+# Author: Just van den Broecke
+# Usage: restore.sh <dump file .tar.gz>
+# Example: restore.sh influxdb-dc1_airsenseur_181123.tar.gz
 #
+# NB: the .tar.gz file should have a topdir of database name
+# as created via backup.sh
 
-INFLUXDB_DB=airsenseur
-CONTAINER_NAME=dc-airsenseur-0
-CONTAINER_DUMP_FILE=/backup/influxdb_${INFLUXDB_DB}_data.tar.gz
-NS=collectors
+SCRIPT_DIR=${0%/*}
 
-# ETL Process must be as first argument
+pushd ${SCRIPT_DIR}
+	if [ ! -f influxdb.env ]
+	then
+	    echo "Bestand influxdb.env niet gevonden."
+	    exit 1
+	fi
+    source influxdb.env
+popd
+
+# Need dump file tar.gz as arg
 DUMP_FILE="$1"
 if [ "${DUMP_FILE}x" = "x" ];
 then

@@ -2,13 +2,20 @@
 # Perform tests within container.
 #
 
-INFLUXDB_DB=airsenseur
-CONTAINER_NAME=dc-airsenseur-0
-CONTAINER_BACKUP_DIR=/backup/${INFLUXDB_DB}
-CONTAINER_DUMP_FILE=/backup/influxdb_${INFLUXDB_DB}_data.tar.gz
-NS=collectors
+SCRIPT_DIR=${0%/*}
+
+pushd ${SCRIPT_DIR}
+	if [ ! -f influxdb.env ]
+	then
+	    echo "Bestand influxdb.env niet gevonden."
+	    exit 1
+	fi
+    source influxdb.env
+popd
+
+CMD="test-cmd.sh"
 
 # On RUNNING Pod/Container
-kubectl cp tests.sh ${NS}/${CONTAINER_NAME}:/tests.sh
-kubectl -n ${NS} exec ${CONTAINER_NAME} -- chmod +x /tests.sh
-kubectl -n ${NS} exec ${CONTAINER_NAME} -- /tests.sh
+kubectl cp ${CMD} ${NS}/${CONTAINER_NAME}:/${CMD}
+kubectl -n ${NS} exec ${CONTAINER_NAME} -- chmod +x /${CMD}
+kubectl -n ${NS} exec ${CONTAINER_NAME} -- /${CMD}
