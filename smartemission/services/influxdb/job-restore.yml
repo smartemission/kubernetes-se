@@ -1,3 +1,4 @@
+# OBSOLETE: use restore.sh with restore-cmd.sh !
 apiVersion: batch/v1
 kind: Job
 metadata:

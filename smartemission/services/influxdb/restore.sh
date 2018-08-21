@@ -1,10 +1,12 @@
 #!/bin/bash
 #
-# Dump InfluxDB and copy dump file to specified dumpfile.
+# Restore InfluxDB from local dumpfile.
 # Author: Just van den Broecke
-# Usage: backup.sh <dump file .tar.gz>
-# Example: backup.sh influxdb-dc1_airsenseur_181123.tar.gz
+# Usage: restore.sh <dump file .tar.gz>
+# Example: restore.sh influxdb-dc1_airsenseur_181123.tar.gz
 #
+# NB: the .tar.gz file should have a topdir of database name
+# as created via backup.sh
 
 SCRIPT_DIR=${0%/*}
 
@@ -26,17 +28,17 @@ then
 fi
 
 # Copy and execute script on RUNNING Pod/Container
-CMD="backup-cmd.sh"
+CMD="restore-cmd.sh"
 
 # Copy and enable command in container
 kubectl cp ${CMD} ${NS}/${CONTAINER_NAME}:/${CMD}
 kubectl -n ${NS} exec ${CONTAINER_NAME} -- chmod +x /${CMD}
 
-# Execute backup in container
+# Copy dumpfile to fixed name container
+kubectl cp ${DUMP_FILE} ${NS}/${CONTAINER_NAME}:${CONTAINER_DUMP_FILE}
+
+# Execute restore in container
 kubectl -n ${NS} exec ${CONTAINER_NAME} -- /${CMD}
 
-# Copy dumpfile to local file
-kubectl cp ${NS}/${CONTAINER_NAME}:${CONTAINER_DUMP_FILE} ${DUMP_FILE}
-
-# Cleanup in container
-kubectl -n ${NS} exec ${CONTAINER_NAME} -- rm -f /${CMD} ${CONTAINER_DUMP_FILE}
+# Cleanup
+kubectl -n ${NS} exec ${CONTAINER_NAME} -- rm /${CMD} ${CONTAINER_DUMP_FILE}

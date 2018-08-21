@@ -9,7 +9,7 @@ echo "Executing for ${INFLUXDB_READ_USER}:${INFLUXDB_READ_PASSWORD}"
 
 URL="http://localhost:8086/query?pretty=true"
 CREDS="${INFLUXDB_READ_USER}:${INFLUXDB_READ_USER_PASSWORD}"
-MEASUREMENTS="joseraw joserefined joseextract rivm"
+MEASUREMENTS="ASE_NL_01 ASE_NL_02 ASE_NL_03 ASE_NL_04 ASE_NL_05"
 URL="http://localhost:8086/query?pretty=true"
 CURL_CMD="curl -s -G ${URL} -u ${CREDS} --data-urlencode db=${INFLUXDB_DB} --data-urlencode "
 
