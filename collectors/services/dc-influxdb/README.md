@@ -5,7 +5,7 @@ sensors. Most significantly AirSensEUR.
 
 ## Databases
 
-Mainly `airsenseur`.
+Mainly `airsenseur`. All is setup via env variables (see [docker-se-influxdb README](https://github.com/smartemission/docker-se-influxdb)).
 
 ## Backup and Restore
 
