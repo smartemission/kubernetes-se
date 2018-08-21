@@ -1,7 +1,11 @@
 # Data Collector 1
 
-This Data Collector runs InfluxDB to assembl raw data from various
+This Data Collector runs InfluxDB to assemble raw data from various
 sensors. Most significantly AirSensEUR.
+
+## Databases
+
+Mainly `airsenseur`.
 
 ## Backup and Restore
 

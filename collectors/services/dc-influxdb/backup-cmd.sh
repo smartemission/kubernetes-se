@@ -12,4 +12,4 @@ rm -rf ${CONTAINER_BACKUP_DIR}
 mkdir -p ${CONTAINER_BACKUP_DIR}
 influxd backup -portable -database ${INFLUXDB_DB} ${CONTAINER_BACKUP_DIR}
 tar -cvzf ${CONTAINER_DUMP_FILE} -C /backup ${INFLUXDB_DB}
-# rm -rf ${CONTAINER_BACKUP_DIR}
+rm -rf ${CONTAINER_BACKUP_DIR}

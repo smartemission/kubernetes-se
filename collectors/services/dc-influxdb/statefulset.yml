@@ -17,7 +17,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: influxdb
-        image: influxdb:1.5.3
+        image: influxdb:1.6.1
         env:
           - name: INFLUXDB_DB
             value: airsenseur

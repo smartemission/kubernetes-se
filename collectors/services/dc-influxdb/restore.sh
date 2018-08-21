@@ -29,9 +29,16 @@ fi
 
 # Copy and execute script on RUNNING Pod/Container
 CMD="restore-cmd.sh"
+
+# Copy and enable command in container
 kubectl cp ${CMD} ${NS}/${CONTAINER_NAME}:/${CMD}
 kubectl -n ${NS} exec ${CONTAINER_NAME} -- chmod +x /${CMD}
-kubectl cp ${DUMP_FILE} collectors/${CONTAINER_NAME}:${CONTAINER_DUMP_FILE}
+
+# Copy dumpfile to fixed name container
+kubectl cp ${DUMP_FILE} ${NS}/${CONTAINER_NAME}:${CONTAINER_DUMP_FILE}
+
+# Execute restore in container
 kubectl -n ${NS} exec ${CONTAINER_NAME} -- /${CMD}
 
-# kubectl -n collectors exec ${CONTAINER_NAME} -- rm -rf ${CONTAINER_DUMP_FILE}
+# Cleanup
+kubectl -n ${NS} exec ${CONTAINER_NAME} -- rm /${CMD} ${CONTAINER_DUMP_FILE}
