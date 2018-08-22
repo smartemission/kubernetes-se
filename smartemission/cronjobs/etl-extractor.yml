@@ -12,7 +12,7 @@ spec:
         spec:
           containers:
           - name: etl-extractor
-            image: smartemission/se-stetl:1.0.18
+            image: smartemission/se-stetl:1.0.19
             args:
             - extractor
             env:
