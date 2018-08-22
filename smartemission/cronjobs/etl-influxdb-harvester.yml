@@ -25,7 +25,7 @@ spec:
             - name: stetl_influx_as_reader
               valueFrom:
                 secretKeyRef:
-                  name: dc-airsenseur-influxdb-reader
+                  name: dc-airsenseur-reader
                   key: username
             - name: stetl_influx_as_reader_password
               valueFrom:
