@@ -1,6 +1,6 @@
 # InfluxDB
 
-InfluxDB to data for:
+InfluxDB is used for:
 
 * Calibration Learning Process: RIVM reference Data and SE raw data for learning
 * Refined Data: calibrated hour-values from refiner ETL process for comparing with ref data 
