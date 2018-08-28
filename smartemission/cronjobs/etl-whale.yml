@@ -12,7 +12,7 @@ spec:
         spec:
           containers:
           - name: etl-whale
-            image: smartemission/se-stetl:1.0.20
+            image: smartemission/se-stetl:1.0.21
             args:
             - harvester_whale
             env:
