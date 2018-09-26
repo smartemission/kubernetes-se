@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: geoserver
-        image: smartemission/se-geoserver:2.12.1-6
+        image: smartemission/se-geoserver:2.12.1-7
         livenessProbe:
           httpGet:
             path: /geoserver/web/

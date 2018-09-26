@@ -1,5 +1,7 @@
 # Kubernetes
 
+NB THIS REPO IS OBSOLETE! Kubernetes deployment is now maintained within [SmartEmission GitLab](https://gitlab.com/smartemission/sensor-cloud-k8s). 
+
 The entire SE deployment is subdivided into a set of K8s Namespaces, based on separation 
 of functions. The main operational namespace is `smartemission`.
 

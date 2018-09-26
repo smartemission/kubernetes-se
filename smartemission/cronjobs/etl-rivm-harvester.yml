@@ -46,8 +46,8 @@ spec:
               value: "8086"
             - name: stetl_influx_se_database
               value: "smartemission"
-            - name: stetl_influx_se_measurement_refined
-              value: "joserefined"
+            - name: influx_se_measurement_rivm
+              value: "rivm"
             - name: stetl_influx_se_writer
               valueFrom:
                 secretKeyRef:
